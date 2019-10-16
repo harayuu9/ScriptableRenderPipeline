@@ -7,6 +7,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
         // ShaderPass string - use to have consistent name through the code
         public static readonly string s_EmptyStr = "";
         public static readonly string s_ForwardStr = "Forward";
+        public static readonly string s_SilhouetteStr = "Silhouette";
         public static readonly string s_DepthOnlyStr = "DepthOnly";
         public static readonly string s_DepthForwardOnlyStr = "DepthForwardOnly";
         public static readonly string s_ForwardOnlyStr = "ForwardOnly";
@@ -36,6 +37,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
         // ShaderPass name
         public static readonly ShaderTagId s_EmptyName = new ShaderTagId(s_EmptyStr);
         public static readonly ShaderTagId s_ForwardName = new ShaderTagId(s_ForwardStr);
+        public static readonly ShaderTagId s_SilhouetteName = new ShaderTagId(s_SilhouetteStr);
         public static readonly ShaderTagId s_DepthOnlyName = new ShaderTagId(s_DepthOnlyStr);
         public static readonly ShaderTagId s_DepthForwardOnlyName = new ShaderTagId(s_DepthForwardOnlyStr);
         public static readonly ShaderTagId s_ForwardOnlyName = new ShaderTagId(s_ForwardOnlyStr);
@@ -208,7 +210,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
         public static readonly int _CosTime             = Shader.PropertyToID("_CosTime");
         public static readonly int unity_DeltaTime      = Shader.PropertyToID("unity_DeltaTime");
         public static readonly int _TimeParameters      = Shader.PropertyToID("_TimeParameters");
-        public static readonly int _LastTimeParameters  = Shader.PropertyToID("_LastTimeParameters");        
+        public static readonly int _LastTimeParameters  = Shader.PropertyToID("_LastTimeParameters");
 
         public static readonly int _EnvLightSkyEnabled = Shader.PropertyToID("_EnvLightSkyEnabled");
         public static readonly int _AmbientOcclusionParam = Shader.PropertyToID("_AmbientOcclusionParam");
@@ -736,7 +738,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
         public const string kStencilRefDistortionVec = "_StencilRefDistortionVec";
         public const string kStencilWriteMaskDistortionVec = "_StencilWriteMaskDistortionVec";
         public const string kUseSplitLighting = "_RequireSplitLighting";
-        
+
         public const string kZWrite = "_ZWrite";
         public const string kTransparentCullMode = "_TransparentCullMode";
         public const string kZTestTransparent = "_ZTestTransparent";
@@ -751,7 +753,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
         public const string kEnableSSR = "_ReceivesSSR";
 
         public const string kLayerCount = "_LayerCount";
-        
+
         public const string kAlphaCutoffEnabled = "_AlphaCutoffEnable";
         public const string kZTestGBuffer = "_ZTestGBuffer";
         public const string kZTestDepthEqualForOpaque = "_ZTestDepthEqualForOpaque";
@@ -779,7 +781,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
         public const string kUVDetail = "_UVDetail";
         public const string kUVDetailsMappingMask = "_UVDetailsMappingMask";
         public const string kReceivesSSR = "_ReceivesSSR";
-    
+
         public static readonly Color[] kLayerColors =
         {
             Color.white,

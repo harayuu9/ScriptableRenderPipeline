@@ -1883,6 +1883,9 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
 
                 RenderDeferredLighting(hdCamera, cmd);
 
+                //AddHarada
+                RenderOutline(cullingResults, hdCamera, renderContext, cmd);
+                
                 RenderForwardOpaque(cullingResults, hdCamera, renderContext, cmd);
 
                 m_SharedRTManager.ResolveMSAAColor(cmd, hdCamera, m_CameraSssDiffuseLightingMSAABuffer, m_CameraSssDiffuseLightingBuffer);
@@ -2917,6 +2920,25 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
             }
         }
 
+        //AddHarada
+        void RenderOutline(CullingResults cullResults, HDCamera hdCamera, ScriptableRenderContext renderContext, CommandBuffer cmd)
+        {
+            bool debugDisplay = m_CurrentDebugDisplaySettings.IsDebugDisplayEnabled();
+            using (new ProfilingSample(cmd, "Render Outline", CustomSamplerId.Silhouette.GetSampler()))
+            {
+                bool msaa = hdCamera.frameSettings.IsEnabled(FrameSettingsField.MSAA);
+
+                RenderTargetIdentifier[] renderTarget = null;
+
+                renderTarget = mMRTSingle;
+                renderTarget[0] = msaa ? m_CameraColorMSAABuffer : m_CameraColorBuffer;
+
+                HDUtils.SetRenderTarget(cmd, renderTarget, m_SharedRTManager.GetDepthStencilBuffer(msaa));
+                var rendererList = RendererList.Create(CreateOpaqueRendererListDesc(cullResults, hdCamera.camera, HDShaderPassNames.s_SilhouetteName));
+                DrawOpaqueRendererList(renderContext, cmd, hdCamera.frameSettings, rendererList);
+            }
+        }
+
         static bool NeedMotionVectorForTransparent(FrameSettings frameSettings)
         {
             return frameSettings.IsEnabled(FrameSettingsField.MotionVectors) && frameSettings.IsEnabled(FrameSettingsField.TransparentsWriteMotionVector);
@@ -2954,6 +2976,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
             var passNames = m_Asset.currentPlatformRenderPipelineSettings.supportTransparentBackface ? m_AllTransparentPassNames : m_TransparentNoBackfaceNames;
             return CreateTransparentRendererListDesc(cullResults, hdCamera.camera, passNames, m_CurrentRendererConfigurationBakedLighting, transparentRange);
         }
+
 
 
         void RenderForwardTransparent(CullingResults cullResults, HDCamera hdCamera, bool preRefraction, ScriptableRenderContext renderContext, CommandBuffer cmd)

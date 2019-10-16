@@ -113,6 +113,8 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
         FXAA,
         SMAA,
         FinalPost,
+//AddHarada
+        Silhouette,
 
         Max
     }
