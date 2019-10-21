@@ -115,6 +115,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
         FinalPost,
 //AddHarada
         Silhouette,
+        Outline,
 
         Max
     }

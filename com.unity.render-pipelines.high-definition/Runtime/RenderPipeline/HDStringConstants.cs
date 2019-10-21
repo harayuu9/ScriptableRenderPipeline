@@ -8,6 +8,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
         public static readonly string s_EmptyStr = "";
         public static readonly string s_ForwardStr = "Forward";
         public static readonly string s_SilhouetteStr = "Silhouette";
+        public static readonly string s_OutlineStr = "Outline";
         public static readonly string s_DepthOnlyStr = "DepthOnly";
         public static readonly string s_DepthForwardOnlyStr = "DepthForwardOnly";
         public static readonly string s_ForwardOnlyStr = "ForwardOnly";
@@ -38,6 +39,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
         public static readonly ShaderTagId s_EmptyName = new ShaderTagId(s_EmptyStr);
         public static readonly ShaderTagId s_ForwardName = new ShaderTagId(s_ForwardStr);
         public static readonly ShaderTagId s_SilhouetteName = new ShaderTagId(s_SilhouetteStr);
+        public static readonly ShaderTagId s_OutlineName = new ShaderTagId(s_OutlineStr);
         public static readonly ShaderTagId s_DepthOnlyName = new ShaderTagId(s_DepthOnlyStr);
         public static readonly ShaderTagId s_DepthForwardOnlyName = new ShaderTagId(s_DepthForwardOnlyStr);
         public static readonly ShaderTagId s_ForwardOnlyName = new ShaderTagId(s_ForwardOnlyStr);
