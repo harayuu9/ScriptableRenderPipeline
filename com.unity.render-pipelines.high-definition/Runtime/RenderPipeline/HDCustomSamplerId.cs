@@ -116,6 +116,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
 //AddHarada
         Silhouette,
         Outline,
+        ForwardPlayer,
 
         Max
     }

@@ -7,6 +7,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
         // ShaderPass string - use to have consistent name through the code
         public static readonly string s_EmptyStr = "";
         public static readonly string s_ForwardStr = "Forward";
+        public static readonly string s_ForwardPlayerStr = "ForwardPlayer";
         public static readonly string s_SilhouetteStr = "Silhouette";
         public static readonly string s_OutlineStr = "Outline";
         public static readonly string s_DepthOnlyStr = "DepthOnly";
@@ -38,6 +39,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
         // ShaderPass name
         public static readonly ShaderTagId s_EmptyName = new ShaderTagId(s_EmptyStr);
         public static readonly ShaderTagId s_ForwardName = new ShaderTagId(s_ForwardStr);
+        public static readonly ShaderTagId s_ForwardPlayerName = new ShaderTagId(s_ForwardPlayerStr);
         public static readonly ShaderTagId s_SilhouetteName = new ShaderTagId(s_SilhouetteStr);
         public static readonly ShaderTagId s_OutlineName = new ShaderTagId(s_OutlineStr);
         public static readonly ShaderTagId s_DepthOnlyName = new ShaderTagId(s_DepthOnlyStr);

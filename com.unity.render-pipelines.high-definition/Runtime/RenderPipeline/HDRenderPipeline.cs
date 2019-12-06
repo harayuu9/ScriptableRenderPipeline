@@ -1883,10 +1883,12 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
 
                 RenderDeferredLighting(hdCamera, cmd);
 
+                RenderForwardOpaque(cullingResults, hdCamera, renderContext, cmd);
+
                 //AddHarada
                 RenderSilhouette(cullingResults, hdCamera, renderContext, cmd);
-
-                RenderForwardOpaque(cullingResults, hdCamera, renderContext, cmd);
+                RenderForwardPlayerOpaque(cullingResults, hdCamera, renderContext, cmd);
+                RenderOutline(cullingResults, hdCamera, renderContext, cmd);
 
                 m_SharedRTManager.ResolveMSAAColor(cmd, hdCamera, m_CameraSssDiffuseLightingMSAABuffer, m_CameraSssDiffuseLightingBuffer);
                 m_SharedRTManager.ResolveMSAAColor(cmd, hdCamera, GetSSSBufferMSAA(), GetSSSBuffer());
@@ -1898,9 +1900,6 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
                 RenderForwardEmissive(cullingResults, hdCamera, renderContext, cmd);
 
                 RenderSky(hdCamera, cmd);
-
-                //AddHarada
-                RenderOutline(cullingResults, hdCamera, renderContext, cmd);
 
                 RenderTransparentDepthPrepass(cullingResults, hdCamera, renderContext, cmd);
 
@@ -2924,6 +2923,24 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
         }
 
         //AddHarada
+        void RenderForwardPlayerOpaque(CullingResults cullResults, HDCamera hdCamera, ScriptableRenderContext renderContext, CommandBuffer cmd)
+        {
+            bool debugDisplay = m_CurrentDebugDisplaySettings.IsDebugDisplayEnabled();
+            using (new ProfilingSample(cmd, "Render ForwardPlayer", CustomSamplerId.ForwardPlayer.GetSampler()))
+            {
+                bool msaa = hdCamera.frameSettings.IsEnabled(FrameSettingsField.MSAA);
+
+                RenderTargetIdentifier[] renderTarget = null;
+
+                renderTarget = mMRTSingle;
+                renderTarget[0] = msaa ? m_CameraColorMSAABuffer : m_CameraColorBuffer;
+
+                HDUtils.SetRenderTarget(cmd, renderTarget, m_SharedRTManager.GetDepthStencilBuffer(msaa));
+                var rendererList = RendererList.Create(CreateOpaqueRendererListDesc(cullResults, hdCamera.camera, HDShaderPassNames.s_ForwardPlayerName));
+                DrawOpaqueRendererList(renderContext, cmd, hdCamera.frameSettings, rendererList);
+            }
+        }
+
         void RenderSilhouette(CullingResults cullResults, HDCamera hdCamera, ScriptableRenderContext renderContext, CommandBuffer cmd)
         {
             bool debugDisplay = m_CurrentDebugDisplaySettings.IsDebugDisplayEnabled();
