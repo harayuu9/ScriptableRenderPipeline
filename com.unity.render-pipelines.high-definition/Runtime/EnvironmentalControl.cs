@@ -20,6 +20,8 @@ public class EnvironmentalControl : MonoBehaviour
     private float areaIntensity;
     private float[] spotIntensity;
 
+    public float Weight => Vector3.Dot(Vector3.down, directional.transform.forward);
+
     private void Start()
     {
         areaIntensity = area.intensity;
@@ -31,7 +33,7 @@ public class EnvironmentalControl : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        var weight = Vector3.Dot(Vector3.down, directional.transform.forward);
+        var weight = Weight;
 
         if (weight > 0)
         {
